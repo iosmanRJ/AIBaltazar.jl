@@ -71,16 +71,37 @@ stored in
 
 If there is interest, we can look for a non-plaintext way to store these keys.
 
-To specify your key using environment variables, invoke Julia
+You should also set a OpenAI model to be used. [openai.com](https://platform.openai.com/docs/models) and pass it to Julia. 
+You can try whichever you like, so far tested are gpt-4, gpt-3.5-turbo or gpt-3.5-turbo-16k
+AIBaltazar.jl
+will look for a model name in the module's settings and in 
+the `OPENAI_MODEL` environment variable as a fallback.
+If not set, the default value is - gpt-3.5-turbo
+
+The **recommended approach** is to save the API key in the 
+module's settings by running:
+
+```julia
+julia> using AIBaltazar
+
+julia> AIBaltazar.setModelName("<YOUR MODEL NAME HERE>")
+```
+
+The model name can later be cleared with `AIBaltazar.clearModelName()`.
+
+To specify your key and model name using environment variables, invoke Julia
 as shown below:
 
 ```sh
-$ OPENAI_API_KEY=<key goes here> julia
+$ OPENAI_API_KEY=<key goes here> OPENAI_MODEL=<model name goes here> julia
 ```
 
-Note that when the environment variable is used, the key is **not** saved to the `LocalPreferences.toml` file.
+Note that when the environment variables are used, the key and model name are **not** saved to the `LocalPreferences.toml` file.
 
 ---
+
+Forked from
+[ReplGPT.jl](https://github.com/ThatcherC/ReplGPT.jl)
 
 Inspiration drawn from 
 [OpenAI.jl](https://github.com/rory-linehan/OpenAI.jl), 
