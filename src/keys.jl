@@ -24,9 +24,9 @@ end
 """
     function setAPIkey(key::String)
 
-Sets the OpenAI API key for ReplGPT to use. The key will be saved as plaintext to your environment's
+Sets the OpenAI API key for AIBaltazar to use. The key will be saved as plaintext to your environment's
 `LocalPreferences.toml` file (perhaps somewhere like `~/.julia/environments/v1.8/LocalPreferences.toml`).
-The key can be deleted with `ReplGPT.clearAPIkeyI()`. 
+The key can be deleted with `AIBaltazar.clearAPIkeyI()`. 
 """
 function setAPIkey(key::String)
     @set_preferences!(api_pref_name => key)
@@ -37,7 +37,7 @@ end
 
 Deletes the OpenAI API key saved in `LocalPreferences.toml` if present. 
 
-See also: ReplGPT.setAPIkey(key::String)
+See also: AIBaltazar.setAPIkey(key::String)
 """
 function clearAPIkey()
     @delete_preferences!(api_pref_name)

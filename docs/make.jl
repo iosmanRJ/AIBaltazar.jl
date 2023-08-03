@@ -1,9 +1,9 @@
 using Documenter
-using ReplGPT
+using AIBaltazar
 
-makedocs(sitename = "ReplGPT", format = Documenter.HTML(), modules = [ReplGPT])
+makedocs(sitename = "AIBaltazar", format = Documenter.HTML(), modules = [AIBaltazar])
 
 # Documenter can also automatically deploy documentation to gh-pages.
 # See "Hosting Documentation" and deploydocs() in the Documenter manual
 # for more information.
-deploydocs(repo = "github.com/ThatcherC/ReplGPT.jl.git")
+deploydocs(repo = "github.com/ThatcherC/AIBaltazar.jl.git")

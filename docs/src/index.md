@@ -1,6 +1,6 @@
-# ReplGPT.jl
+# AIBaltazar.jl
 
-Documentation for ReplGPT.jl
+Documentation for AIBaltazar.jl
 
 ```@contents
 ```
@@ -8,31 +8,31 @@ Documentation for ReplGPT.jl
 ## Key Management Functions
 
 ```@docs
-ReplGPT.getAPIkey()
+AIBaltazar.getAPIkey()
 ```
 
 ```@docs
-ReplGPT.setAPIkey(key::String)
+AIBaltazar.setAPIkey(key::String)
 
-ReplGPT.clearAPIkey()
+AIBaltazar.clearAPIkey()
 ```
 
 ## Conversation Management
 
 ```@docs
-ReplGPT.initialize_conversation()
+AIBaltazar.initialize_conversation()
 
-ReplGPT.save_conversation(filepath)
+AIBaltazar.save_conversation(filepath)
 ```
 
 ## Output Formatting
 
 ```@docs
-ReplGPT.setFormatter(f::Function)
+AIBaltazar.setFormatter(f::Function)
 
-ReplGPT.markdown(s::String)
+AIBaltazar.markdown(s::String)
 
-ReplGPT.plaintext(s::String)
+AIBaltazar.plaintext(s::String)
 ```
 
 

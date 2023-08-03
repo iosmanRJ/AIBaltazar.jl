@@ -1,4 +1,4 @@
-module ReplGPT
+module AIBaltazar
 
 import OpenAI
 import ReplMaker
@@ -8,9 +8,10 @@ using Preferences
 
 include("formatting.jl")
 include("keys.jl")
+include("models.jl")
 
 """
-    function ReplGPT.generate_empty_conversation()
+    function AIBaltazar.generate_empty_conversation()
 
 Returns a new empty conversation history.
 """
@@ -21,20 +22,20 @@ end
 conversation = generate_empty_conversation()
 
 """
-    function ReplGPT.initialize_conversation()
+    function AIBaltazar.initialize_conversation()
 
-Sets the ChatGPT conversation to an empty state. This effectively
-starts a new chat with ChatGPT with no recollection of past messages.
+Sets the Baltazar conversation to an empty state. This effectively
+starts a new chat with Baltazar with no recollection of past messages.
 """
 function initialize_conversation()
     global conversation = generate_empty_conversation()
 end
 
 """
-    function ReplGPT.conversation_as_string()
+    function AIBaltazar.conversation_as_string()
 
 Serializes a conversation history to a string. Messages sent from the user
-are preceded by "You:", messages from ChatGPT are preceded by "ChatGPT:",
+are preceded by "You:", messages from Baltazar are preceded by "Baltazar:",
 and any system messages are preceded by "System:".
 
 """
@@ -45,7 +46,7 @@ function conversation_as_string()
             println(buf, "You:")
             println(buf, "----\n")
         elseif message["role"] == "assistant"
-            println(buf, "ChatGPT:")
+            println(buf, "Baltazar:")
             println(buf, "--------\n")
         elseif message["role"] == "system"
             println(buf, "System:")
@@ -60,23 +61,23 @@ function conversation_as_string()
 end
 
 """
-    function ReplGPT.save_conversation(filepath)
+    function AIBaltazar.save_conversation(filepath)
 
-Saves the output of [`ReplGPT.conversation_as_string()`](@ref) to a file at 
-`filepath`. See the chat and output of ReplGPT.save_conversation() below.
+Saves the output of [`AIBaltazar.conversation_as_string()`](@ref) to a file at 
+`filepath`. See the chat and output of AIBaltazar.save_conversation() below.
 
 ## Example:
 
 ```julia
 julia> 
 
-ChatGPT> What does LISP stand for in computing?
+Baltazar> What does LISP stand for in computing?
   LISP stands for "LISt Processor".
 
-ChatGPT> How about FORTRAN?
+Baltazar> How about FORTRAN?
   FORTRAN stands for "FORmula TRANslation".
 
-julia> ReplGPT.save_conversation("/tmp/convo.txt")
+julia> AIBaltazar.save_conversation("/tmp/convo.txt")
 
 shell> cat /tmp/convo.txt
 You:
@@ -84,7 +85,7 @@ You:
 
 What does LISP stand for in computing?
 
-ChatGPT:
+Baltazar:
 --------
 
 LISP stands for "LISt Processor".
@@ -94,7 +95,7 @@ You:
 
 How about FORTRAN?
 
-ChatGPT:
+Baltazar:
 --------
 
 FORTRAN stands for "FORmula TRANslation".
@@ -112,13 +113,24 @@ function save_conversation(filepath)
     end
 end
 
-function call_chatgpt(s)
+function call_Baltazar(s)
     key = getAPIkey()
+    model = getModelName()
     if !ismissing(key)
+
+        if ismissing(model)
+            model = "gpt-3.5-turbo"
+            setModelName(model)
+            @warn format(
+                "OpenAI model not defined. Setting gpt-3.5-turbo as a default model. Please change it with `AIBaltazar.setModelName(\"<YOUR PREFERED OPENAI MODEL>\")` or set the environment variable $(api_model_name)=<YOUR PREFERED OPENAI MODEL>",
+            )
+        end
+
         userMessage = Dict("role" => "user", "content" => s)
         push!(conversation, userMessage)
 
-        r = OpenAI.create_chat(key, "gpt-3.5-turbo", conversation)
+        # gpt-3.5-turbo
+        r = OpenAI.create_chat(key, model, conversation)
 
         # TODO: check for errors!
         #if !=(r.status, 200)
@@ -126,7 +138,7 @@ function call_chatgpt(s)
         #end  
         response = r.response["choices"][begin]["message"]["content"]
 
-        # append ChatGPT's response to the conversation history
+        # append Baltazar's response to the conversation history
         # TODO: the object built here might just be the same as r.response["choices"][begin]["message"]
         responseMessage = Dict("role" => "assistant", "content" => response)
         push!(conversation, responseMessage)
@@ -134,7 +146,7 @@ function call_chatgpt(s)
         format(response)
     else
         format(
-            "OpenAI API key not found! Please set with `ReplGPT.setAPIkey(\"<YOUR OPENAI API KEY>\")` or set the environment variable $(api_key_name)=<YOUR OPENAI API KEY>",
+            "OpenAI API key not found! Please set with `AIBaltazar.setAPIkey(\"<YOUR OPENAI API KEY>\")` or set the environment variable $(api_key_name)=<YOUR OPENAI API KEY>",
         )
     end
 end
@@ -142,15 +154,19 @@ end
 function init_repl()
 
     if ismissing(getAPIkey())
-        @warn "OpenAI API key not found! Please set with `ReplGPT.setAPIkey(\"<YOUR OPENAI API KEY>\")` or set the environment variable $(api_key_name)=<YOUR OPENAI API KEY>"
+        @warn "OpenAI API key not found! Please set with `AIBaltazar.setAPIkey(\"<YOUR OPENAI API KEY>\")` or set the environment variable $(api_key_name)=<YOUR OPENAI API KEY>"
+    end
+
+    if ismissing(getModelName())
+        @warn "OpenAI model not defined! Please set it with `AIBaltazar.setModelName(\"<YOUR PREFERED OPENAI MODEL>\")` or set the environment variable $(api_model_name)=<YOUR PREFERED OPENAI MODEL>"
     end
 
     ReplMaker.initrepl(
-        call_chatgpt,
-        prompt_text = "ChatGPT> ",
+        call_Baltazar,
+        prompt_text = "Baltazar> ",
         prompt_color = :blue,
         start_key = '}',
-        mode_name = "ChatGPT_mode",
+        mode_name = "Baltazar_mode",
     )
 end
 

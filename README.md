@@ -1,13 +1,13 @@
-[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://thatcherc.github.io/ReplGPT.jl/stable)
-[![](https://img.shields.io/badge/docs-dev-blue.svg)](https://thatcherc.github.io/ReplGPT.jl/dev)
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://thatcherc.github.io/AIBaltazar.jl/stable)
+[![](https://img.shields.io/badge/docs-dev-blue.svg)](https://thatcherc.github.io/AIBaltazar.jl/dev)
 
-# ReplGPT.jl
+# AIBaltazar.jl
 
 Talk to ChatGPT from the Julia REPL!
 
-It's as simple as `using ReplGPT` and entering the shell with `}`:
+It's as simple as `using AIBaltazar` and entering the shell with `}`:
 ```julia
-julia> using ReplGPT
+julia> using AIBaltazar
 REPL mode ChatGPT_mode initialized. Press } to enter and backspace to exit.
 
 ChatGPT> Can you give me a quick example of exponentiating a matrix in Julia?
@@ -49,7 +49,7 @@ ChatGPT>
 ```
 
 ## Getting Started:
-You will need to obtain an OpenAI API key from [openai.com](https://platform.openai.com/account/api-keys) and pass it to Julia. ReplGPT.jl
+You will need to obtain an OpenAI API key from [openai.com](https://platform.openai.com/account/api-keys) and pass it to Julia. AIBaltazar.jl
 will look for an API key in the module's settings and in 
 the `OPENAI_API_KEY` environment variable as a fallback.
 
@@ -57,12 +57,12 @@ The **recommended approach** is to save the API key in the
 module's settings by running:
 
 ```julia
-julia> using ReplGPT
+julia> using AIBaltazar
 
-julia> ReplGPT.setAPIkey("<YOUR KEY HERE>")
+julia> AIBaltazar.setAPIkey("<YOUR KEY HERE>")
 ```
 
-The API key can later be cleared with `ReplGPT.clearAPIkey()`.
+The API key can later be cleared with `AIBaltazar.clearAPIkey()`.
 
 **Note:** with this approach your API key will be stored in plaintext in a 
 `LocalPreferences.toml` folder in your environment directory. For example, on a Linux computer running Julia 1.8, the key is
