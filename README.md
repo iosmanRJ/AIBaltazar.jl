@@ -72,13 +72,12 @@ stored in
 If there is interest, we can look for a non-plaintext way to store these keys.
 
 You should also set a OpenAI model to be used. [openai.com](https://platform.openai.com/docs/models) and pass it to Julia. 
-You can try whichever you like, so far tested are gpt-4, gpt-3.5-turbo or gpt-3.5-turbo-16k
-AIBaltazar.jl
-will look for a model name in the module's settings and in 
-the `OPENAI_MODEL` environment variable as a fallback.
-If not set, the default value is - gpt-3.5-turbo
+You can try whichever you like, but so far tested and confirmed to be working are:
+```gpt-4, gpt-3.5-turbo or gpt-3.5-turbo-16k```
+AIBaltazar.jl will look for a model name in the module's settings and in the `OPENAI_MODEL` environment variable as a fallback.
+If not set, the default value is - "gpt-3.5-turbo"
 
-The **recommended approach** is to save the API key in the 
+The **recommended approach** is to save the model name in the 
 module's settings by running:
 
 ```julia
