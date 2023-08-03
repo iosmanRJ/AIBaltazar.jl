@@ -3,7 +3,7 @@
 
 # AIBaltazar.jl
 
-Talk to ChatGPT from the Julia REPL!
+Talk to ChatGPT (gpt-4, gpt-3.5-turbo or gpt-3.5-turbo-16k) from the Julia REPL!
 
 It's as simple as `using AIBaltazar` and entering the shell with `}`:
 ```julia
